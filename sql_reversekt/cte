@@ -1,0 +1,24 @@
+-- Create the SalesData table
+CREATE TABLE SalesData (
+    ProductID INT,
+    OrderDate DATE,
+    Quantity INT
+);
+
+-- Insert sample data into the SalesData table
+INSERT INTO SalesData (ProductID, OrderDate, Quantity) VALUES
+(1, '2023-01-01', 10),
+(1, '2023-01-02', 20),
+(2, '2023-01-01', 15),
+(2, '2023-01-03', 25),
+(3, '2023-01-01', 5),
+(3, '2023-01-04', 10);
+
+-- Use a CTE to calculate the total quantity sold for each product
+WITH TotalQuantityPerProduct AS (
+    SELECT ProductID,SUM(Quantity) AS TotalQuantity
+    FROM SalesData
+    GROUP BY ProductID
+)
+SELECT ProductID,TotalQuantity
+FROM TotalQuantityPerProduct;

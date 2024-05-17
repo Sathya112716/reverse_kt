@@ -1,0 +1,22 @@
+-- Create a table to store the sequence of numbers
+CREATE TABLE NumberSequenceTable (
+    Number INT
+);
+
+-- Use a recursive CTE to generate a sequence of numbers from 1 to 10
+WITH RECURSIVE NumberSequence AS (
+    -- Anchor member: start the sequence with 1
+    SELECT 1 AS Number
+    UNION ALL
+    -- Recursive member: add 1 to the previous number until 10 is reached
+    SELECT Number + 1
+    FROM NumberSequence
+    WHERE Number < 10
+)
+-- Insert the generated sequence into the NumberSequenceTable
+INSERT INTO NumberSequenceTable (Number)
+SELECT Number
+FROM NumberSequence;
+
+-- Select from the table to verify the insertion
+SELECT * FROM NumberSequenceTable;
